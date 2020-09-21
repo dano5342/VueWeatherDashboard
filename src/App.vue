@@ -1,43 +1,43 @@
 <template>
-  <div id="app">
+<div id="app">
     <p>This component’s code is in {{ filename }}</p>
-    <Content 
-      :weather_data="weather_data">
+    <Content :weather_data="weather_data">
     </Content>
-  </div>
+</div>
 </template>
 
 <script>
 import Content from './components/Content.vue';
 
 export default {
-  components: {
-    'Content': Content,
-  },
-  data() {
-    return {
-      filename: 'App.vue',
-      weather_data: {
-        location: 'Berlin',
-        temperature: {
-          current: '25 C',
-        },
-        highlights: {
-          windstatus: {
-            speed: '20 km/h',
-            direction: 'N-E',            
-          },
-          visibility: '12 km'
+    components: {
+        'Content': Content,
+    },
+    data() {
+        return {
+            filename: 'App.vue',
+            weather_data: {
+                location: 'Berlin',
+                temperature: {
+                    current: '25 C',
+                },
+                highlights: {
+                    uvindex: '3',
+                    windstatus: {
+                        speed: '20 km/h',
+                        direction: 'N-E',
+                    },
+                    visibility: '12 km'
+                }
+            },
         }
-      },
-    }
-  },
-  methods: {
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  },
+    },
 }
 </script>
 
