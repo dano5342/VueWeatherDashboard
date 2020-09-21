@@ -1,23 +1,38 @@
 <template>
-    <div>
-        <p> This child components of content.vue are:</p>
-        <ul>
-            <li v-for="child in childComponents"> {{ child }}</li>
-        </ul>
-    </div>
+  <div id="pagecontent">
+    <p>This child components of Content.vue are:</p>
+    <ul>
+      <li v-for="child in childComponents" :key="child">{{ child }}</li>
+    </ul>
+    {{ weather_data }}
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            childComponents: ['temp_var_chart.vue', 'highlights.vue']
-        }
-    },
+  props: {
+      weather_data: {
+          type: Object,
+          required: false,
+      },
+  },
+  data () {
+    return {
+      childComponents: ['TempVarChart.vue', 'Highlights.vue']
+    }
+  },
+  methods: {
 
-    methods: {},
-    computed: {},
-    
+  },
+  computed: {
 
+  },
 }
 </script>
+
+<style>
+    #pagecontent {
+        border: 1px solid black;
+        padding: 2px;
+    }
+</style>
