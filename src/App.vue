@@ -1,7 +1,7 @@
 <template>
 <div id="app">
     <p>This component’s code is in {{ filename }}</p>
-    <Content :weather_data="weather_data">
+    <Content :highlights="weather_data.highlights" :tempVar="weather_data.temperature">
     </Content>
 </div>
 </template>
@@ -28,7 +28,7 @@ export default {
                         direction: 'N-E',
                     },
                     visibility: '12 km'
-                }
+                },
             },
         }
     },

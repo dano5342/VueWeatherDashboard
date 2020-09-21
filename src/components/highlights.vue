@@ -1,8 +1,9 @@
 <template>
-<div id="highlights">
-    <p>Weather Highlights:</p>
-    {{ highlights }}
-</div>
+  <div>
+    <uv-index :highlights="highlights"></uv-index>
+    <visibility :highlights="highlights"></visibility>
+    <wind-status :highlights="highlights"></wind-status>
+  </div>
 </template>
 
 <script>
@@ -11,28 +12,28 @@ import Visibility from './Visibility.vue';
 import WindStatus from './WindStatus.vue';
 
 export default {
-    props: {
-        highlights: {
-            type: Object,
-            required: false,
-        },
-    },
-    components: {
-        'uv-index': UVIndex,
-        'visibility': Visibility,
-        'wind-status': WindStatus,
-    },
-    data() {
-        return {
+  props: {
+      highlights: {
+          type: Object,
+          required: false
+      }
+  },
+  components: {
+    'uv-index': UVIndex,
+    'visibility': Visibility,
+    'wind-status': WindStatus,
+  },
+  data () {
+    return {
 
-        }
-    },
-    methods: {
+    }
+  },
+  methods: {
 
-    },
-    computed: {
+  },
+  computed: {
 
-    },
+  },
 }
 </script>
 
