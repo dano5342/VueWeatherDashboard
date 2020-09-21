@@ -1,29 +1,28 @@
 <template>
-  <div id="uvindex">
+<div id="uvindex">
     <p>UV Index: {{ uvindex }}</p>
-  </div>
+</div>
 </template>
 
 <script>
-
 export default {
     props: {
-      highlights: {
-          type: Object,
-          required: false
-      }
-  },
-  data () {
-    return {
-      uvindex: this.highlights.uvindex
-    }
-  },
-  methods: {
+        highlights: {
+            type: Object,
+            required: false
+        }
+    },
+    data() {
+        return {
+            uvindex: this.highlights.uvindex
+        }
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  },
+    },
 }
 </script>
 

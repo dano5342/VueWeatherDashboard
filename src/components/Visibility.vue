@@ -1,29 +1,28 @@
 <template>
-  <div>
+<div>
     <p>Visibility: {{ visibility }}</p>
-  </div>
+</div>
 </template>
 
 <script>
-
 export default {
-  props: {
-      highlights: {
-          type: Object,
-          required: false
-      }
-  },
-  data () {
-    return {
-      visibility: this.highlights.visibility.toString()
-    }
-  },
-  methods: {
+    props: {
+        highlights: {
+            type: Object,
+            required: false
+        }
+    },
+    data() {
+        return {
+            visibility: this.highlights.visibility.toString()
+        }
+    },
+    methods: {
 
-  },
-  computed: {
+    },
+    computed: {
 
-  },
+    },
 }
 </script>
 

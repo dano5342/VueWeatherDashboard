@@ -1,26 +1,26 @@
 <template>
-  <div>
-    {{ tempVar.tempToday }}    
-  </div>
+<div>
+    {{ tempVar.tempToday }}
+</div>
 </template>
 
 <script>
 export default {
-  props: {
-      tempVar: {
-          type: Object,
-          required: false
-      }
-  },
-  components: {},
-  data() {
-    return {
+    props: {
+        tempVar: {
+            type: Object,
+            required: false
+        }
+    },
+    components: {},
+    data() {
+        return {
 
-    };
-  },
-  methods: {
+        };
+    },
+    methods: {
 
-  },
+    },
 
 };
 </script>
