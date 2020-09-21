@@ -1,5 +1,11 @@
 <template>
 <div id="app">
+    <div id="search">
+        <input id="location-input" type="text" ref="input" placeholder="Location?" @keyup.enter="organizeAllDetails">
+        <button id="search-btn" @click="organizeAllDetails">
+            <img src="./assets/Search.svg" width="24" height="24">
+        </button>
+    </div>
     <dashboard-content :tempVar="tempVar" :highlights="highlights">
     </dashboard-content>
 </div>
@@ -53,6 +59,9 @@ export default {
         }
     },
     methods: {
+        organizeAllDetails() {
+            alert('Testing Woah!')
+        },
 
     },
     computed: {
