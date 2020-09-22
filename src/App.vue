@@ -109,6 +109,38 @@ export default {
         organizeAllDetails() {
             alert('Testing Woah!')
         },
+
+
+
+
+        // event methods:
+        makeInputEmpty() {
+            this.$refs.input.value = '';
+        },
+        makeTempVarTodayEmpty() {
+            this.tempVar.tempToday = [];
+        },
+        detectEnterKeyPress() {
+            let input = this.$refs.input;
+            input.addEventListener('keyup', (evt) => {
+                evt.preventDefault();
+                let enterKeyCode = 13;
+                if(evt.keyCode === enterKeyCode){
+                    this.setHitEnterKeyTrue();
+                }
+            });
+        },
+        locationEntered() {
+            let input = this.$refs.input;
+            if (input.value === '') {
+                this.location = 'Berlin';
+            } else {
+                this.location = this.convertToTitleCase(input.value);
+            }
+            this.makeInputEmpty();
+            this.makeTempVarTodayEmpty();
+        },
+
     },
     computed: {
 
