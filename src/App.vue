@@ -174,7 +174,7 @@ export default {
             let long = this.long;
             let key = WeatherAPI;
             let currentWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}`
-            this.completeWeatherApi = weatherApi;
+            this.completeWeatherApi = currentWeatherApi;
         },
         async fetchWeatherData() {
             await this.setWeatherLocation();
@@ -245,6 +245,56 @@ export default {
                 this.timezone,
                 min.dt
             ).onlyTime
+        },
+        getHourlyInfoToday() {
+            return this.rawWeatherData.hourly;
+        },
+        getSetHourlyTempInfoToday() {
+            let unixTime = this.rawWeatherData.current.dt;
+            let timezone = this.getTimezone();
+            let todayMonthDate = unixToHuman(timezone, unixTime).onlyMonthDate;
+            let hourlyData = this.getHourlyInfoToday();
+            for (let i = 0; i < hourlyData.length; i++) {
+                let hourlyTimeAllTypes = unixToHuman(timezone, hourlyData[i].dt);
+                let hourlyOnlyTime = hourlyTimeAllTypes.onlyTime;
+                let hourlyMonthDate = hourlyTimeAllTypes.onlyMonthDate;
+                if (todayMonthDate === hourlyMonthDate) {
+                    let hourlyObject = {
+                        hour: '',
+                        temp: ''
+                    };
+                    hourlyObject.hour = hourlyOnlyTime;
+                    hourlyObject.temp = kelvinToCelcius(hourlyData[i].temp).toString();
+                    this.tempVar.tempToday.push(hourlyObject);
+                }
+            }
+            if (this.tempVar.tempToday.length <= 2) {
+                var minTempObject = {
+                    hour: this.currentWeather.todayHighLow.todayTempHighTime,
+                    temp: this.currentWeather.todayHighLow.todayTempHigh
+                };
+                var maxTempObject = {
+                    hour: this.currentWeather.todayHighLow.todayTempLowTime,
+                    temp: this.currentWeather.todayHighLow.todayTempLow
+                };
+                this.tempVar.tempToday.unshift(maxTempObject, minTempObject);
+            }
+        },
+        getSetUVIndex() {
+            let uvIndex = this.rawWeatherData.current.uvi;
+            this.highlights.uvIndex = uvIndex;
+
+        },
+        getSetVisibility() {
+            let visibilityInMeters = this.rawWeatherData.current.visibility;
+            this.highlights.visibility = kmShortener(visibilityInMeters);
+        },
+
+        getSetWindStatus() {
+            let windSpeed = this.rawWeatherData.current.wind_speed;
+            let absoluteWindDirection = this.rawWeatherData.current.wind_deg;
+            this.highlights.windStatus.windDirection = absoluteWindDir;
+            this.highlights.windStatus.derivedWindDirection = deriveWindDir(absoluteWindDirection);
         },
         // event methods:
         makeInputEmpty() {

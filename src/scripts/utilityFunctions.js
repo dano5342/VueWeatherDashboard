@@ -67,6 +67,20 @@ function mileToKilometer(miles) {
   return Math.round(kilometer);
 }
 
+function kmToMile(km) {
+    let miles = km / 1.6
+    return miles
+}
+
+function kmShortener(meters) {
+    if (meters >= 10000) {
+        let short = (meters / 1000).toString();
+        return short + 'km'
+    } else if (meters < 10000) {
+        return meters.toString() + 'm'
+    }
+}
+
 function deriveWindDirection(windDir) {
   let wind_directions_array = [{
       minVal: 0,
