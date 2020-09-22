@@ -42,6 +42,20 @@ function celciusToFarenheit(celcius) {
     return fahrenheit;
 }
 
+// API sets temps in K
+function kelvinToCelcius(tempInK) {
+    let celcius = tempInK - 273.15;
+    return celcius;
+}
+
+
+// API sets temps in K
+
+function kelvinToFar(tempInK) {
+    let fahrenheit = ((tempInK - 273.15) * 1.8) + 32;
+    return fahrenheit;
+}
+
 // Converts Air Pressure
 function milibarToKPascal(pressureInMilibar) {
   let pressureInKPA = pressureInMilibar * 0.1;
