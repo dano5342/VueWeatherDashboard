@@ -60,8 +60,9 @@
 <script>
 import Content from './components/Content.vue';
 import './scripts/utilityFunctions.js';
-import {WeatherAPI} from './scripts/_owapi.js';
-
+import {
+    WeatherAPI
+} from './scripts/_owapi.js';
 
 export default {
     components: {
@@ -160,7 +161,7 @@ export default {
                     (Math.round(coordinates.long * 10000) / 10000).toString() + '°E';
             } else if (coordinates.long < 0) {
                 this.currentWeather.formatted_long =
-                    (-1 * (Math.round(coordinates.long * 10000) / 10000)).toString() +'°W';
+                    (-1 * (Math.round(coordinates.long * 10000) / 10000)).toString() + '°W';
             } else {
                 this.currentWeather.formatted_long = (
                     Math.round(coordinates.long * 10000) / 10000
@@ -172,7 +173,7 @@ export default {
             let lat = this.lat;
             let long = this.long;
             let key = WeatherAPI;
-            let weatherApi = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${key}`
+            let currentWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${key}`
             this.completeWeatherApi = weatherApi;
         },
         async fetchWeatherData() {
@@ -189,32 +190,61 @@ export default {
             if (this.rawWeatherData.timezone != undefined) {
                 return this.rawWeatherData.timezone
             } else {
-                return this.rawWeatherData.list[0].dt;
-            }
+                alert('Timezone not found');
+            };
         },
         getCurrentTime() {
-            let currentTime = this.rawWeatherData.list[0].dt;
+            let currentTime = this.rawWeatherData.current.dt;
             let timezone = this.getTimezone();
-            this.currentWeather.time = this.unixToHuman(
+            this.currentWeather.time = unixToHuman(
                 timezone,
                 currentTime,
             ).fullTime;
         },
         getSetSummary() {
             let currentSummary = convertToTitleCase(
-                this.rawWeatherData.list[0].weather.description
+                this.rawWeatherData.daily[0].weather.description
             );
             this.currentWeather.summary = currentSummary;
         },
-        getSetPossibility() { 
+        getSetPossibility() {
             let possible = formatPossibility(
-                this.rawWeatherData.list[1].weather.description
+                this.rawWeatherData.hourly[1].weather.description
             );
             this.currentWeather.possibility = possible;
         },
         getSetCurrentTemp() {
-            let currentTemp = this.rawWeatherData.list[0].temp;
+            let currentTemp = this.rawWeatherData.current.temp;
             this.currentWeather.temp = kelvinToCelcius(currentTemp);
+        },
+        getTodayDetails() {
+            return this.rawWeatherData.daily[0]
+        },
+        getSetTodayTempHighLowTime() {
+            let timezone = this.getTimezone();
+            let todayDetails = this.getTodayDetails();
+            let hourlyClone = this.rawWeatherData.hourly.slice(0);
+            hourlyClone.sort((a, b) => {
+                return parseInt(a.temp) - parseInt(b.temp);
+            });
+            let min = hourlyClone[0];
+            let max = hourlyClone[hourlyClone.length - 1];
+            this.currentWeather.todayHighLow.todayTempHigh = kelvinToCelcius(
+                todayDetails.temp.max
+            );
+            // Time for Hottest
+            this.currentWeather.todayHighLow.todayTempHighTime = unixToHuman(
+                this.timezone,
+                max.dt
+            ).onlyTime
+            this.currentWeather.todayHighLow.todayTempLow = kelvinToCelcius(
+                todayDetails.temp.min
+            );
+            // Time for Lowest
+            this.currentWeather.todayHighLow.todayTempLowTime = unixToHuman(
+                this.timezone,
+                min.dt
+            ).onlyTime
         },
         // event methods:
         makeInputEmpty() {
